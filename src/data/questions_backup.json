@@ -1,0 +1,202 @@
+[
+  {
+    "id": 101,
+    "question": "GRR 的主要目的是什么？",
+    "options": ["评价过程能力", "评价测量系统", "评价设备寿命", "评价人员效率"],
+    "answer": 1,
+    "explanation": "GRR（Gauge Repeatability & Reproducibility）用于评价测量系统的重复性和再现性，是 MSA 的核心内容。",
+    "category": "Measure"
+  },
+  {
+    "id": 102,
+    "question": "CPK = 1.33 代表什么含义？",
+    "options": ["过程能力不足", "过程能力一般", "过程能力良好", "过程能力过剩"],
+    "answer": 2,
+    "explanation": "CPK ≥ 1.33 通常被认为是过程能力良好的标准，对应的不合格率约为 63 ppm。",
+    "category": "Measure"
+  },
+  {
+    "id": 103,
+    "question": "以下哪个不属于 DMAIC 的阶段？",
+    "options": ["Define", "Measure", "Design", "Control"],
+    "answer": 2,
+    "explanation": "DMAIC 包含 Define、Measure、Analyze、Improve、Control 五个阶段。Design 属于 DFSS（六西格玛设计）的方法。",
+    "category": "Define"
+  },
+  {
+    "id": 104,
+    "question": "SIPOC 在哪个阶段使用？",
+    "options": ["Analyze", "Improve", "Control", "Define"],
+    "answer": 3,
+    "explanation": "SIPOC（供应商-输入-过程-输出-客户）在 Define 阶段用于界定项目范围。",
+    "category": "Define"
+  },
+  {
+    "id": 105,
+    "question": "%GRR 值为 35% 时，以下判断正确的是？",
+    "options": ["测量系统可接受", "有条件接受", "不可接受，需要改进", "无法判断"],
+    "answer": 2,
+    "explanation": "%GRR > 30% 为不可接受，测量系统必须改进后才能使用。10%~30% 为有条件接受，< 10% 为可接受。",
+    "category": "Measure"
+  },
+  {
+    "id": 106,
+    "question": "以下哪个工具常用于根因分析？",
+    "options": ["控制图", "鱼骨图", "SOP", "DOE"],
+    "answer": 1,
+    "explanation": "鱼骨图（因果图）是 Analyze 阶段用于系统化识别根本原因的工具。控制图用于 Control 阶段，DOE 用于 Improve 阶段。",
+    "category": "Analyze"
+  },
+  {
+    "id": 107,
+    "question": "假设检验中，I 类错误是指？",
+    "options": ["原假设为真时拒绝原假设", "原假设为假时接受原假设", "备择假设为真时拒绝备择假设", "样本量不够导致的错误"],
+    "answer": 0,
+    "explanation": "I 类错误（弃真错误）是原假设 H0 为真时错误地拒绝了 H0，概率为 α（显著性水平）。II 类错误（取伪错误）是 H0 为假时未拒绝，概率为 β。",
+    "category": "Analyze"
+  },
+  {
+    "id": 108,
+    "question": "控制图的控制线与规格线之间的关系是？",
+    "options": ["控制线等于规格线", "控制线由规格线计算得出", "控制线与规格线是不同概念", "控制线始终比规格线宽"],
+    "answer": 2,
+    "explanation": "控制线（UCL/LCL）由过程数据计算得出，反映过程波动；规格线（USL/LSL）由客户或设计要求给定。两者是独立的概念。",
+    "category": "Control"
+  },
+  {
+    "id": 109,
+    "question": "以下关于 PPK 和 CPK 的区别，正确的是？",
+    "options": ["PPK 使用组内标准差", "CPK 使用整体标准差", "PPK 反映长期性能", "PPK 一定大于 CPK"],
+    "answer": 2,
+    "explanation": "PPK 使用整体标准差，反映长期过程性能；CPK 使用组内标准差，反映短期过程能力。PPK ≤ CPK 恒成立。",
+    "category": "Measure"
+  },
+  {
+    "id": 110,
+    "question": "在 Improve 阶段，寻找最优参数组合常用的工具是？",
+    "options": ["SIPOC", "MSA", "DOE", "SPC"],
+    "answer": 2,
+    "explanation": "DOE（实验设计）在 Improve 阶段用于系统化实验，找到最优参数组合。SIPOC 在 Define 阶段，MSA 在 Measure 阶段，SPC 在 Control 阶段。",
+    "category": "Improve"
+  },
+  {
+    "id": 111,
+    "question": "VOC 与 CTQ 的关系是？",
+    "options": ["VOC 和 CTQ 是同一概念", "CTQ 从 VOC 转化而来", "VOC 从 CTQ 转化而来", "二者无关"],
+    "answer": 1,
+    "explanation": "CTQ（关键质量特性）从 VOC（客户之声）转化而来，将客户需求转化为可测量的指标。",
+    "category": "Define"
+  },
+  {
+    "id": 112,
+    "question": "R² = 0.90 的含义是什么？",
+    "options": ["模型预测准确率 90%", "自变量解释了 90% 的因变量变异", "回归系数为 0.9", "p 值为 0.1"],
+    "answer": 1,
+    "explanation": "R²（决定系数）衡量自变量对因变量变异的解释程度，0.90 表示模型解释了 90% 的变异。",
+    "category": "Analyze"
+  },
+  {
+    "id": 113,
+    "question": "防错（Poka-Yoke）优先使用哪种类型？",
+    "options": ["检测型防错", "预防型防错", "培训型防错", "惩罚型防错"],
+    "answer": 1,
+    "explanation": "防错优先采用预防型（使错误不发生），其次才是检测型（错误发生后立即发现）。",
+    "category": "Improve"
+  },
+  {
+    "id": 114,
+    "question": "控制图中，连续 9 个点落在中心线同一侧表示？",
+    "options": ["过程正常", "过程存在异常偏移", "测量系统有问题", "数据录入错误"],
+    "answer": 1,
+    "explanation": "连续 9 点在同一侧是 SPC 八大异常判异准则之一，表明过程均值发生了偏移。",
+    "category": "Control"
+  },
+  {
+    "id": 115,
+    "question": "MSA 分析应优先于以下哪项活动？",
+    "options": ["SOP 制定", "过程能力分析", "控制计划编写", "防错设计"],
+    "answer": 1,
+    "explanation": "在 Measure 阶段，MSA 应在过程能力分析（CPK/PPK）之前完成，因为只有测量系统合格，数据才可用于能力分析。",
+    "category": "Measure"
+  },
+  {
+    "id": 116,
+    "question": "ANOVA 主要用于？",
+    "options": ["比较两个组的均值", "比较三个及以上组的均值", "分析变量相关性", "预测未来趋势"],
+    "answer": 1,
+    "explanation": "ANOVA（方差分析）用于比较三个或以上组别均值是否有显著差异。两个组比较用 t 检验。",
+    "category": "Analyze"
+  },
+  {
+    "id": 117,
+    "question": "以下哪个是 Control 阶段的交付物？",
+    "options": ["项目章程", "鱼骨图", "控制计划", "DOE 实验方案"],
+    "answer": 2,
+    "explanation": "控制计划是 Control 阶段的核心交付物，用于维持改进成果。项目章程是 Define 阶段，鱼骨图是 Analyze 阶段，DOE 是 Improve 阶段。",
+    "category": "Control"
+  },
+  {
+    "id": 118,
+    "question": "线性是指测量系统在哪方面的特性？",
+    "options": ["随时间变化的偏倚", "不同操作员的差异", "不同量程范围偏倚的一致性", "同一零件重复测量的变异"],
+    "answer": 2,
+    "explanation": "线性评价量具在预期测量范围内偏倚的一致性，即不同量程段的偏倚是否有差异。",
+    "category": "Measure"
+  },
+  {
+    "id": 119,
+    "question": "项目章程不需要包含以下哪项？",
+    "options": ["问题陈述", "控制计划", "项目范围", "目标陈述"],
+    "answer": 1,
+    "explanation": "项目章程包含问题陈述、目标、范围、里程碑、团队成员等，在 Define 阶段制定。控制计划是 Control 阶段的交付物。",
+    "category": "Define"
+  },
+  {
+    "id": 120,
+    "question": "使用假设检验时，p = 0.03，α = 0.05，结论是？",
+    "options": ["接受原假设", "拒绝原假设", "无法判断", "需要增加样本量"],
+    "answer": 1,
+    "explanation": "p < α 时拒绝原假设 H0，认为结果是统计显著的。p = 0.03 < 0.05，故拒绝 H0。",
+    "category": "Analyze"
+  },
+  {
+    "id": 121,
+    "question": "DMAIC 方法论的最终目标是什么？",
+    "options": ["减少成本", "消除所有变异", "持续改善和维持改进成果", "增加产量"],
+    "answer": 2,
+    "explanation": "DMAIC 的最终目标是通过数据驱动的方法实现持续改善并通过控制阶段维持成果，而不是一次性解决问题。",
+    "category": "Define"
+  },
+  {
+    "id": 122,
+    "question": "全因子实验（2³）需要多少次实验？",
+    "options": ["4 次", "6 次", "8 次", "16 次"],
+    "answer": 2,
+    "explanation": "2³ 全因子实验 = 2 水平^3 因子 = 8 次实验。如果有中心点或重复则需要更多。",
+    "category": "Improve"
+  },
+  {
+    "id": 123,
+    "question": "以下哪种情况适合做控制图监控？",
+    "options": ["新工艺试制阶段", "量产稳定阶段", "设备调试阶段", "研发实验阶段"],
+    "answer": 1,
+    "explanation": "控制图用于量产稳定阶段的持续监控。在试制、调试、研发阶段应使用其他分析工具。",
+    "category": "Control"
+  },
+  {
+    "id": 124,
+    "question": "以下关于 MSA 的偏倚，描述正确的是？",
+    "options": ["偏倚反映测量精密度", "偏倚反映测量准确度", "偏倚反映测量稳定性", "偏倚反映测量线性"],
+    "answer": 1,
+    "explanation": "偏倚是测量平均值与参考值的差异，反映测量的准确度。重复性反映精密度，线性反映不同量程的偏倚一致性。",
+    "category": "Measure"
+  },
+  {
+    "id": 125,
+    "question": "中质协六西格玛绿带考试中，六西格玛水平对应的 DPMO 是？",
+    "options": ["3.4", "233", "6210", "66807"],
+    "answer": 0,
+    "explanation": "六西格玛水平对应的 DPMO（每百万机会缺陷数）为 3.4（考虑 1.5σ 漂移后）。不考虑漂移时为 0.002。",
+    "category": "Define"
+  }
+]

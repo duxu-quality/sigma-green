@@ -27,7 +27,7 @@ function AppLayout() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/sigma-green">
       <AppLayout />
     </BrowserRouter>
   );
