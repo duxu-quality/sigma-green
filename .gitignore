@@ -12,6 +12,20 @@ dist
 dist-ssr
 *.local
 
+# Local config
+.claude/
+scripts/*.cjs
+scripts/*.js
+!scripts/generate_icons.cjs
+
+# Temp/data dump files
+src/data/questions_backup.json
+src/data/questions_full.json
+src/data/questions_parsed.json
+src/data/questions_old.json
+src/assets/vite.svg
+src/assets/react.svg
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

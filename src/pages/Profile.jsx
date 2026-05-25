@@ -108,7 +108,7 @@ export default function Profile() {
 
       {/* 版本信息 */}
       <p className="text-center text-xs text-sigma-subtle mt-8">
-        Sigma Green V1.2 · 六西格玛绿带学习工具
+        杜旭 Sigma Green V1.2 · 六西格玛绿带学习工具
       </p>
     </div>
   );
