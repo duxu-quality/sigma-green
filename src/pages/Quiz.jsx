@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import questionsData from '../data/questions.json';
 import QuizCard from '../components/QuizCard';
+import { enrichQuestion } from '../utils/questionProcessing';
 import {
   getWrongQuestions,
   addWrongQuestion,
@@ -22,7 +23,7 @@ export default function Quiz() {
 
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);      // 单选: number; 多选: Set
   const [showResult, setShowResult] = useState(false);
   const [wrongIds, setWrongIds] = useState(new Set());
   const [loading, setLoading] = useState(true);
@@ -49,7 +50,10 @@ export default function Quiz() {
       source = source.filter(q => q.category === categoryFilter);
     }
 
-    const shuffled = [...source].sort(() => Math.random() - 0.5);
+    // 运行时富化：清洗题干 + 图表检测
+    const enriched = source.map(q => enrichQuestion(q));
+
+    const shuffled = [...enriched].sort(() => Math.random() - 0.5);
     setQuestions(mode === 'exam' ? shuffled.slice(0, 60) : shuffled);
 
     const ids = await getWrongQuestionIds();
@@ -73,13 +77,26 @@ export default function Quiz() {
   const currentQuestion = questions[currentIndex];
   const isLast = currentIndex >= questions.length - 1;
 
-  function checkCorrect(ansIdx) {
-    if (!currentQuestion) return false;
-    const a = currentQuestion.answer;
-    if (Array.isArray(a)) return a.includes(ansIdx);
-    return ansIdx === a;
+  // 是否多选题
+  const isMulti = currentQuestion ? currentQuestion._isMulti : false;
+
+  /**
+   * 答案判定
+   * - 单选：selected === answer
+   * - 多选：Set 精确匹配（全对且不多选）
+   */
+  function checkCorrect(selected) {
+    if (!currentQuestion || selected === null || selected === undefined) return false;
+    const correct = currentQuestion.answer;
+    if (Array.isArray(correct)) {
+      if (!(selected instanceof Set)) return false;
+      if (selected.size !== correct.length) return false;
+      return correct.every(idx => selected.has(idx));
+    }
+    return selected === correct;
   }
 
+  // --- 单选：点击选项直接提交 ---
   const handleAnswer = async (index) => {
     if (showResult) return;
     setSelectedAnswer(index);
@@ -94,7 +111,41 @@ export default function Quiz() {
     }
   };
 
-  const handleNext = async () => {
+  // --- 多选：切换选项选中状态 ---
+  const handleSelectOption = (index) => {
+    if (showResult) return;
+    setSelectedAnswer(prev => {
+      const next = prev instanceof Set ? new Set(prev) : new Set();
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
+  };
+
+  // --- 多选：确认提交 ---
+  const handleConfirm = async () => {
+    if (showResult || !(selectedAnswer instanceof Set) || selectedAnswer.size === 0) return;
+    setShowResult(true);
+
+    const correct = checkCorrect(selectedAnswer);
+    await recordQuizResult(currentQuestion.id, correct);
+
+    if (!correct) {
+      await addWrongQuestion(currentQuestion);
+      setWrongIds(prev => new Set([...prev, currentQuestion.id]));
+    }
+  };
+
+  // --- 跳过（图表缺失题） ---
+  const handleSkip = () => {
+    advanceQuestion();
+  };
+
+  // --- 下一题 ---
+  const advanceQuestion = useCallback(async () => {
     if (isLast) {
       if (mode === 'wrong') {
         await loadQuestions();
@@ -103,7 +154,8 @@ export default function Quiz() {
         if (categoryFilter && mode !== 'wrong') {
           source = source.filter(q => q.category === categoryFilter);
         }
-        const shuffled = [...source].sort(() => Math.random() - 0.5);
+        const enriched = source.map(q => enrichQuestion(q));
+        const shuffled = [...enriched].sort(() => Math.random() - 0.5);
         setQuestions(shuffled);
       }
       setCurrentIndex(0);
@@ -112,9 +164,14 @@ export default function Quiz() {
     }
     setSelectedAnswer(null);
     setShowResult(false);
+  }, [isLast, mode, categoryFilter, loadQuestions]);
+
+  const handleNext = () => {
+    advanceQuestion();
   };
 
   const handleToggleWrong = async () => {
+    if (!currentQuestion) return;
     if (wrongIds.has(currentQuestion.id)) {
       await removeWrongQuestion(currentQuestion.id);
       setWrongIds(prev => {
@@ -179,6 +236,7 @@ export default function Quiz() {
               ? 'text-sigma-warning'
               : 'text-sigma-subtle'
           }`}
+          title={wrongIds.has(currentQuestion.id) ? '移出错题本' : '加入错题本'}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill={wrongIds.has(currentQuestion.id) ? '#f59e0b' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
@@ -197,11 +255,17 @@ export default function Quiz() {
       {/* 题目卡片 */}
       <QuizCard
         question={currentQuestion}
+        isMulti={isMulti}
         onAnswer={handleAnswer}
+        onSelectOption={handleSelectOption}
+        onConfirm={handleConfirm}
+        onSkip={handleSkip}
         onNext={handleNext}
         showResult={showResult}
         selectedAnswer={selectedAnswer}
-        isCorrect={checkCorrect(selectedAnswer)}
+        isCorrect={showResult ? checkCorrect(selectedAnswer) : null}
+        hasVisualRef={currentQuestion._hasVisualRef}
+        isStrongVisualRef={currentQuestion._isStrongVisualRef}
       />
     </div>
   );
