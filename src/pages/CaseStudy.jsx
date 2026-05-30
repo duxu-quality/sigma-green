@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import caseStudies from '../data/caseStudies';
 
 const categoryLabels = {
@@ -27,6 +28,7 @@ const phaseBgColors = {
 
 export default function CaseStudy() {
   const [selected, setSelected] = useState(null);
+  const navigate = useNavigate();
 
   // ========== 详情页 ==========
   if (selected) {
@@ -290,6 +292,17 @@ export default function CaseStudy() {
   // ========== 列表页 ==========
   return (
     <div className="pb-20 px-4 pt-6 max-w-lg mx-auto">
+      {/* 返回首页 */}
+      <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-2 mb-4 px-3 py-2 bg-sigma-card border border-sigma-border rounded-xl text-sigma-text active:bg-sigma-border transition-colors"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        <span className="text-sm">返回首页</span>
+      </button>
+
       <h1 className="text-2xl font-bold text-sigma-text mb-2">案例分析</h1>
       <p className="text-sm text-sigma-subtle mb-4">
         {caseStudies.length} 个 DMAIC 实战案例，理解六西格玛在真实场景中的应用
